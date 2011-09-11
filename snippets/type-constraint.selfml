@@ -1,0 +1,8 @@
+(name [Type Constraint])
+
+(trigger
+    (tab =))
+
+(only-in [source.haskell meta.function.type])
+
+(snippet [(%{1="Class"}) => %{0}])

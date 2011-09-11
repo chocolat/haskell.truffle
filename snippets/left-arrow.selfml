@@ -1,0 +1,9 @@
+(name [Left Arrow])
+
+(trigger
+    (key [[ctrl],])
+    (tab <))
+
+(only-in source.haskell)
+
+(snippet [%{1="name"} <- %{0="expression"}])

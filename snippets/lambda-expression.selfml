@@ -1,0 +1,8 @@
+(name [Lambda Expression])
+
+(trigger
+    (tab \))
+
+(only-in source.haskell)
+
+(snippet [\%{1="pattern"} -> %{0="expression"}])

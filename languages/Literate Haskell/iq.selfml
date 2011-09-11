@@ -1,0 +1,34 @@
+(detector
+    (extension lhs))
+
+(in source.haskell
+    (shell-variables
+        (TM_COMMENT_START_2 [{-])
+        (TM_COMMENT_END_2 [-}])
+        (TM_COMMENT_START [-- ]))
+    (comment.line [-- ])
+    (comment.block [{-] [-}]))
+
+(in source.haskell
+    (indentation.decrease ^\s*$)
+    (indentation.increase [((^.*(=|\bdo|\bwhere|\bthen|\belse|\bof)\s*$)|(^.*\bif(?!.*\bthen\b.*\belse\b.*).*$))]))
+
+(in [source.haskell entity.name.function.infix]
+    (symbol-list))
+
+(in [source.haskell - comment]
+    (pair `[`
+        `]`
+        (smart-typing))
+    (pair [(]
+        [)]
+        (smart-typing))
+    (pair [`]
+        [`]
+        (smart-typing))
+    (pair "
+        "
+        (smart-typing))
+    (pair [{]
+        [}]
+        (smart-typing)))

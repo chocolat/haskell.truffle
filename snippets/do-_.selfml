@@ -1,0 +1,9 @@
+(name [do …])
+
+(trigger
+    (tab do))
+
+(only-in source.haskell)
+
+(snippet [do
+	%{1="return %{0="expression"}"}])

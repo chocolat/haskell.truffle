@@ -1,0 +1,8 @@
+(name [Haddock Prefix])
+
+(trigger
+    (tab ^))
+
+(only-in [source.haskell comment.block])
+
+(snippet [^ %{0="documentation"}])

@@ -1,0 +1,8 @@
+(name [List Comprehension])
+
+(trigger
+    (tab `[`))
+
+(only-in [source.haskell constant.language.nil])
+
+(snippet `[ %{1="expression"} | %{2="name"} <- %{3="expression"}%{4/.+/, /}%{4="condition"} `)

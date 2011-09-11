@@ -1,0 +1,9 @@
+(name [where …])
+
+(trigger
+    (tab where))
+
+(only-in source.haskell)
+
+(snippet [where
+	%{0="definitions"}])

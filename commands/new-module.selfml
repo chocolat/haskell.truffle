@@ -1,0 +1,26 @@
+(trigger
+    (tab mod))
+
+(name [module …])
+
+(only-in source.haskell)
+
+(input nothing)
+
+(output snippet)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+NAME=${TM_FILENAME%.hs}
+if [[ -z "$NAME" ]]; then
+	NAME="Main"
+fi
+
+cat <<SNIPPET
+module \${1:$NAME} \${2/.+/(
+	/m}\${2:function}\${2/.+/
+) /m}where
+\$0
+SNIPPET])

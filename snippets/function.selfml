@@ -1,0 +1,9 @@
+(name Function)
+
+(trigger
+    (tab fun))
+
+(only-in source.haskell)
+
+(snippet [%{1="name"} :: %{2="Type"}
+%{1} %{3="pattern"}%{3/.+/ /}%{4/.+/= /}%{4="definition"}])

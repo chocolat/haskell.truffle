@@ -1,0 +1,1 @@
+(menu command.run command.load-in-ghci --- command.show-type command.lookup-on-hoogle --- command.infix-function-call-from-selection-word --- snippet.main ---)

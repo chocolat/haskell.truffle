@@ -1,0 +1,22 @@
+(trigger
+    (key [[ctrl]']))
+
+(name [Infix Function Call From Word / Selection])
+
+(only-in source.haskell)
+
+(input selection word)
+
+(output snippet)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+NAME="$(cat)"
+if [[ -z "$NAME" ]]; then
+	NAME="\$1"
+fi
+
+echo "\`$NAME\`\$0"
+])

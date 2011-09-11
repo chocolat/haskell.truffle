@@ -1,0 +1,25 @@
+(root text.tex.latex.haskell
+    (zone meta.function.embedded.haskell.latex
+        (start
+            (regex [^((\\)begin)({)code(})(\s*\n)?]
+                (3 punctuation.definition.arguments.begin.latex)
+                (4 punctuation.definition.arguments.end.latex)
+                (1 support.function.be.latex)
+                (2 punctuation.definition.function.latex)))
+        (end
+            (regex [^((\\)end)({)code(})]
+                (3 punctuation.definition.arguments.begin.latex)
+                (4 punctuation.definition.arguments.end.latex)
+                (1 support.function.be.latex)
+                (2 punctuation.definition.function.latex)))
+        (subzones
+            (include source.haskell)))
+    (zone meta.embedded.haskell
+        (start
+            (regex [^(> )]
+                (1 punctuation.definition.bird-track.haskell)))
+        (end
+            (regex $))
+        (subzones
+            (include source.haskell)))
+    (include text.tex.latex))

@@ -1,0 +1,10 @@
+(name [let …])
+
+(trigger
+    (tab let))
+
+(only-in source.haskell)
+
+(snippet [let
+	%{1="name"} = %{2="expression"}
+	in %{0="expression"}])

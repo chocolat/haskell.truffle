@@ -1,0 +1,8 @@
+(name [Type Sequence])
+
+(trigger
+    (tab -))
+
+(only-in [source.haskell meta.function.type])
+
+(snippet [%{1="Type"} -> %{0="Type"}])

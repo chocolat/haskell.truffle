@@ -1,0 +1,8 @@
+(name [deriving …])
+
+(trigger
+    (tab der))
+
+(only-in [source.haskell meta.type])
+
+(snippet [deriving (%{0="Class"})])

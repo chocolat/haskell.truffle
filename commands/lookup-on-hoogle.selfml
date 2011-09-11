@@ -1,0 +1,15 @@
+(trigger
+    (key [[ctrl][shift]H]))
+
+(name [Lookup on Hoogle])
+
+(only-in source.haskell)
+
+(input selection word)
+
+(output html)
+
+(save nothing)
+
+(script [#!/bin/bash
+echo "<meta http-equiv=\"refresh\" content=\"0; http://haskell.org/hoogle/?q=$(cat)\">"])

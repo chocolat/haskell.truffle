@@ -1,0 +1,12 @@
+(name Main)
+
+(trigger
+    (tab main))
+
+(only-in source.haskell)
+
+(snippet [module Main where
+
+main :: IO ()
+main = %{0="putStrLn "Hello World""}
+])

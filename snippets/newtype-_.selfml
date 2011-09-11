@@ -1,0 +1,8 @@
+(name [newtype …])
+
+(trigger
+    (tab new))
+
+(only-in source.haskell)
+
+(snippet [newtype %{1="Type"} = %{0="Other"}])

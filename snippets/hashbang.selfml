@@ -1,0 +1,9 @@
+(name [#!/usr/bin/env…])
+
+(trigger
+    (tab [#!]))
+
+(only-in source.haskell)
+
+(snippet [#!/usr/bin/env %{1="runhaskell"}
+])

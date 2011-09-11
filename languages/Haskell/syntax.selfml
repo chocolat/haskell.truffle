@@ -1,0 +1,245 @@
+(root source.haskell
+    (zone keyword.operator.function.infix.haskell
+        (match
+            (regex [(`)[a-zA-Z_']*?(`)]
+                (1 punctuation.definition.entity.haskell)
+                (2 punctuation.definition.entity.haskell))))
+    (zone constant.language.unit.haskell
+        (match
+            (regex [\(\)])))
+    (zone constant.language.empty-list.haskell
+        (match
+            (regex [\[\]])))
+    (zone meta.declaration.module.haskell
+        (start
+            (regex [(module)]
+                (1 keyword.other.haskell)))
+        (end
+            (regex [(where)]
+                (1 keyword.other.haskell)))
+        (subzones
+            (include @module_name)
+            (include @module_exports)
+            (zone invalid
+                (match
+                    (regex [[a-z]+])))))
+    (zone meta.declaration.class.haskell
+        (start
+            (regex [\b(class)\b]
+                (1 keyword.other.haskell)))
+        (end
+            (regex [\b(where)\b]
+                (1 keyword.other.haskell)))
+        (subzones
+            (zone support.class.prelude.haskell
+                (match
+                    (regex [\b(Monad|Functor|Eq|Ord|Read|Show|Num|(Frac|Ra)tional|Enum|Bounded|Real(Frac|Float)?|Integral|Floating)\b])))
+            (zone entity.other.inherited-class.haskell
+                (match
+                    (regex [[A-Z][A-Za-z_']*])))
+            (zone variable.other.generic-type.haskell
+                (match
+                    (regex [\b[a-z][a-zA-Z0-9_']*\b])))))
+    (zone meta.declaration.instance.haskell
+        (start
+            (regex [\b(instance)\b]
+                (1 keyword.other.haskell)))
+        (end
+            (regex [\b(where)\b|$]
+                (1 keyword.other.haskell)))
+        (subzones
+            (include @type_signature)))
+    (zone meta.import.haskell
+        (start
+            (regex [(import)]
+                (1 keyword.other.haskell)))
+        (end
+            (regex [($|;)]))
+        (subzones
+            (zone keyword.other.haskell
+                (match
+                    (list qualified as hiding)))
+            (include @module_name)
+            (include @module_exports)))
+    (zone meta.deriving.haskell
+        (start
+            (regex [(deriving)\s*\(]
+                (1 keyword.other.haskell)))
+        (end
+            (regex [\)]))
+        (subzones
+            (zone entity.other.inherited-class.haskell
+                (match
+                    (regex [\b[A-Z][a-zA-Z_']*])))))
+    (zone keyword.other.haskell
+        (match
+            (list deriving where data type case of let in newtype default)
+            (boundary.both)))
+    (zone keyword.operator.haskell
+        (match
+            (regex [\binfix[lr]?\b])))
+    (zone keyword.control.haskell
+        (match
+            (list do if then else)
+            (boundary.both)))
+    (zone constant.numeric.float.haskell
+        (match
+            (regex [\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b])))
+    (zone constant.numeric.haskell
+        (match
+            (regex [\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b])))
+    (zone meta.preprocessor.c
+        (match
+            (regex [^\s*(#)\s*\w+]
+                (1 punctuation.definition.preprocessor.c))))
+    (include @pragma)
+    (zone string.quoted.double.haskell
+        (start
+            (regex "
+                (0 punctuation.definition.string.begin.haskell)))
+        (end
+            (regex "
+                (0 punctuation.definition.string.end.haskell)))
+        (subzones
+            (zone constant.character.escape.haskell
+                (match
+                    (regex [\\(NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\"'\&])])))
+            (zone constant.character.escape.octal.haskell
+                (match
+                    (regex [\\o[0-7]+|\\x[0-9A-Fa-f]+|\\[0-9]+])))
+            (zone constant.character.escape.control.haskell
+                (match
+                    (regex [\^[A-Z@\[\]\\\^_]])))))
+    (zone string.quoted.single.haskell
+        (match
+            (regex [(?x)
+			(')
+			(?:
+				[\ -\[\]-~]								# Basic Char
+			  | (\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE
+					|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS
+					|US|SP|DEL|[abfnrtv\\\"'\&]))		# Escapes
+			  | (\\o[0-7]+)								# Octal Escapes
+			  | (\\x[0-9A-Fa-f]+)						# Hexadecimal Escapes
+			  | (\^[A-Z@\[\]\\\^_])						# Control Chars
+			)
+			(')
+			]
+                (3 constant.character.escape.octal.haskell)
+                (4 constant.character.escape.hexadecimal.haskell)
+                (5 constant.character.escape.control.haskell)
+                (1 punctuation.definition.string.begin.haskell)
+                (6 punctuation.definition.string.end.haskell)
+                (2 constant.character.escape.haskell))))
+    (zone meta.function.type-declaration.haskell
+        (start
+            (regex [^\s*([a-z_][a-zA-Z0-9_']*|\([|!%$+\-.,=</>]+\))\s*(::)]
+                (1 entity.name.function.haskell)
+                (2 keyword.other.double-colon.haskell)))
+        (end
+            (regex $\n?))
+        (subzones
+            (include @type_signature)))
+    (zone support.constant.haskell
+        (match
+            (regex [\b(Just|Nothing|Left|Right|True|False|LT|EQ|GT|\(\)|\[\])\b])))
+    (zone constant.other.haskell
+        (match
+            (regex [\b[A-Z]\w*\b])))
+    (include @comments)
+    (zone support.function.prelude.haskell
+        (match
+            (list abs acos acosh all and any appendFile applyM asTypeOf asin asinh atan atan2 atanh break catch ceiling compare concat concatMap const cos cosh curry cycle decodeFloat div divMod drop dropWhile elem encodeFloat enumFrom enumFromThen enumFromThenTo enumFromTo error even exp exponent fail filter flip floatDigits floatRadix floatRange floor fmap foldl foldl1 foldr foldr1 fromEnum fromInteger fromIntegral fromRational fst gcd getChar getContents getLine head id init interact ioError isDenormalized isIEEE isInfinite isNaN isNegativeZero iterate last lcm length lex lines log logBase lookup map mapM mapM_ max maxBound maximum maybe min minBound minimum mod negate not notElem null odd or otherwise pi pred print product properFraction putChar putStr putStrLn quot quotRem read readFile readIO readList readLn readParen reads readsPrec realToFrac recip rem repeat replicate return reverse round scaleFloat scanl scanl1 scanr scanr1 seq sequence sequence_ show showChar showList showParen showString shows showsPrec significand signum sin sinh snd span splitAt sqrt subtract succ sum tail take takeWhile tan tanh toEnum toInteger toRational truncate uncurry undefined unlines until unwords unzip unzip3 userError words writeFile zip zip3 zipWith zipWith3)
+            (boundary.both)))
+    (include @infix_op)
+    (zone keyword.operator.haskell
+        (match
+            (regex [[|!%$?~+:\-.=</>\\]+])))
+    (zone punctuation.separator.comma.haskell
+        (match ,)))
+
+(collection comments
+    (zone comment.line.double-dash.haskell
+        (match
+            (regex [(--).*$\n?]
+                (1 punctuation.definition.comment.haskell))))
+    (include @block_comment))
+
+(collection pragma
+    (zone meta.preprocessor.haskell
+        (start
+            (regex [\{-#]))
+        (end
+            (regex [#-\}]))
+        (subzones
+            (zone keyword.other.preprocessor.haskell
+                (match
+                    (list LANGUAGE UNPACK INLINE)
+                    (boundary.both))))))
+
+(collection block_comment
+    (zone comment.block.haskell
+        (start
+            (regex [\{-(?!#)]
+                (0 punctuation.definition.comment.haskell)))
+        (end
+            (regex [-\}]
+                (0 punctuation.definition.comment.haskell)))
+        (subzones
+            (include @block_comment))))
+
+(collection infix_op
+    (zone entity.name.function.infix.haskell
+        (match
+            (regex [(\([|!%$+:\-.=</>]+\)|\(,+\))]))))
+
+(collection module_exports
+    (zone meta.declaration.exports.haskell
+        (start
+            (regex [\(]))
+        (end
+            (regex [\)]))
+        (subzones
+            (zone entity.name.function.haskell
+                (match
+                    (regex [\b[a-z][a-zA-Z_']*])))
+            (zone storage.type.haskell
+                (match
+                    (regex [\b[A-Z][A-Za-z_']*])))
+            (zone punctuation.separator.comma.haskell
+                (match ,))
+            (include @infix_op)
+            (zone meta.other.unknown.haskell
+                (match
+                    (regex [\(.*?\)]))))))
+
+(collection module_name
+    (zone support.other.module.haskell
+        (match
+            (regex [[A-Z][A-Za-z._']*]))))
+
+(collection type_signature
+    (zone meta.class-constraint.haskell
+        (match
+            (regex [\(\s*([A-Z][A-Za-z]*)\s+([a-z][A-Za-z_']*)\)\s*(=>)]
+                (3 keyword.other.big-arrow.haskell)
+                (1 entity.other.inherited-class.haskell)
+                (2 variable.other.generic-type.haskell))))
+    (include @pragma)
+    (zone keyword.other.arrow.haskell
+        (match ->))
+    (zone keyword.other.big-arrow.haskell
+        (match =>))
+    (zone support.type.prelude.haskell
+        (match
+            (regex [\b(Int(eger)?|Maybe|Either|Bool|Float|Double|Char|String|Ordering|ShowS|ReadS|FilePath|IO(Error)?)\b])))
+    (zone variable.other.generic-type.haskell
+        (match
+            (regex [\b[a-z][a-zA-Z0-9_']*\b])))
+    (zone storage.type.haskell
+        (match
+            (regex [\b[A-Z][a-zA-Z0-9_']*\b])))
+    (zone support.constant.unit.haskell
+        (match
+            (regex [\(\)])))
+    (include @comments))

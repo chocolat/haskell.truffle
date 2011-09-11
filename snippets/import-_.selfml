@@ -1,0 +1,8 @@
+(name [import …])
+
+(trigger
+    (tab imp))
+
+(only-in source.haskell)
+
+(snippet [import %{1="Module"}%{2/.+/ (/}%{2="function"}%{2/.+/)/}%{0}])

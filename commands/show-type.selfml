@@ -1,0 +1,14 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [Show Type])
+
+(only-in source.haskell)
+
+(input selection word)
+
+(output tooltip)
+
+(save nothing)
+
+(script [haskelltype "$(cat)"])

@@ -1,0 +1,9 @@
+(name [class …])
+
+(trigger
+    (tab cla))
+
+(only-in source.haskell)
+
+(snippet [class %{1="Class"} where
+	%{0="definition"}])

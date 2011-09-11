@@ -1,0 +1,8 @@
+(name Definition)
+
+(trigger
+    (tab =))
+
+(only-in source.haskell)
+
+(snippet [%{1="name"} %{2="pattern"}%{2/.+/ /}= %{0="definition"}])

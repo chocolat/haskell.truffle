@@ -1,0 +1,10 @@
+(name [case … of …])
+
+(trigger
+    (tab case))
+
+(only-in source.haskell)
+
+(snippet [case %{1="expression"} of
+	%{2="pattern"} -> %{3="expression"}
+	%{4="otherwise"} -> %{5="expression"}])

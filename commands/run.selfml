@@ -1,0 +1,19 @@
+(trigger
+    (key [[cmd]R]))
+
+(name Run)
+
+(only-in source.haskell)
+
+(input nothing)
+
+(output html)
+
+(save file)
+
+(script [: ${TM_HASKELL:=runhaskell}
+require_cmd "$TM_HASKELL"
+
+"$TM_HASKELL" "$TM_FILEPATH" 2>&1 | haskellmate
+
+])
