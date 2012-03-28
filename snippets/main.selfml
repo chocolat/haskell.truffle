@@ -8,5 +8,5 @@
 (snippet [module Main where
 
 main :: IO ()
-main = %{0="putStrLn "Hello World""}
+main = %{0="putStrLn \"Hello World\""}
 ])
